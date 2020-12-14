@@ -25,10 +25,10 @@ func (i *IsaacCipher)generateMoreResults() {
 		case 3:
 			i.aa = i.aa ^ (i.aa >> 16)
 		}
-		i.aa = i.mm[z ^ 128] + i.aa
-		i.mm[z] = i.mm[(z >> 2) & 0xff] + i.aa + i.bb
+		i.aa = i.mm[(z + 128) % 0xff]
+		i.mm[z] = i.mm[(z >> 2) % 0xff] + i.aa + i.bb
 		u := i.mm[z]
-		i.bb = i.mm[(u >> 10) & 0xff] + fb
+		i.bb = i.mm[(u >> 10) % 0xff] + fb
 		i.randResult[z] = i.bb
 	}
 	i.valuesLeft = 256
